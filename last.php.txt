@@ -1,0 +1,471 @@
+<?php
+$radio = $_POST['IPv4'];
+$select = $_POST['attribute'];
+
+
+
+# Radio button value is TCP
+if($radio=='tcp')
+{
+
+if($select=='timestamp')
+
+{
+
+    $fh = fopen( "tcp_timestamp", "r");
+  while(!feof($fh))
+{
+$line = fgets($fh);
+print $line. '<br>';
+}
+
+fclose($fh);
+}
+
+else if($select=='length')
+
+{
+
+    $fh = fopen( "tcp_length", "r");
+  while(!feof($fh))
+{
+$line = fgets($fh);
+print $line. '<br>';
+}
+
+fclose($fh);
+}
+
+else if($select=='smac')
+
+{
+
+    $fh = fopen( "tcp_smac", "r");
+  while(!feof($fh))
+{
+$line = fgets($fh);
+print $line. '<br>';
+}
+
+fclose($fh);
+}
+else if($select=='dmac')
+
+{
+
+    $fh = fopen( "tcp_dmac", "r");
+  while(!feof($fh))
+{
+$line = fgets($fh);
+print $line. '<br>';
+}
+
+fclose($fh);
+}
+
+else if($select=='sip')
+
+{
+
+    $fh = fopen( "tcp_sid", "r");
+  while(!feof($fh))
+{
+$line = fgets($fh);
+print $line. '<br>';
+}
+
+fclose($fh);
+}
+
+else if($select=='dip')
+
+{
+
+    $fh = fopen( "tcp_did", "r");
+  while(!feof($fh))
+{
+$line = fgets($fh);
+print $line. '<br>';
+}
+
+fclose($fh);
+}
+else if($select=='dport')
+
+{
+    $fh = fopen( "tcp_dport", "r");
+  while(!feof($fh))
+{
+$line = fgets($fh);
+print $line. '<br>';
+}
+
+fclose($fh);
+}
+
+else if($select=='sport')
+
+{
+    $fh = fopen( "tcp_sport", "r");
+  while(!feof($fh))
+{
+$line = fgets($fh);
+print $line. '<br>';
+}
+
+fclose($fh);
+}
+}
+
+?>
+
+<?php
+if($radio=='tcp' && $select=='all')
+{
+header("Content-type: text/html");
+echo "<html>
+<body>";
+ 
+$file = fopen("tcp_all","r");
+?>
+ 
+<table align="center" border="60px">
+<tr>
+               
+<th>Time Stamp</th>
+<th>Source MAC</th>
+                <th>Destination MAC</th>
+<th>Source IP</th>
+<th>Destination IP</th>
+                <th>Source Port Number</th>
+                <th>Destination Port Number</th>
+                <th>Packet Length</th>
+</tr>
+
+<?php
+ 
+while(($row = fgets($file)) != false)
+        {
+echo "<tr>";
+$col = explode("\t",$row);
+foreach($col as $data) {
+echo "<td>".trim($data)."</td>";
+}
+echo "</tr>";
+}
+}
+?>
+
+</table>
+</body>
+</html>
+
+
+
+<?php
+#RAdio Button value is ARP
+if($radio=='arp')
+{
+
+if($select=='timestamp')
+
+{
+
+    $fh = fopen( "arp_timestamp", "r");
+  while(!feof($fh))
+{
+$line = fgets($fh);
+print $line. '<br>';
+}
+
+fclose($fh);
+}
+
+else if($select=='length')
+
+{
+
+    $fh = fopen( "arp_length", "r");
+  while(!feof($fh))
+{
+$line = fgets($fh);
+print $line. '<br>';
+}
+
+fclose($fh);
+}
+
+else if($select=='smac')
+
+{
+
+    $fh = fopen( "arp_smac", "r");
+  while(!feof($fh))
+{
+$line = fgets($fh);
+print $line. '<br>';
+}
+
+fclose($fh);
+}
+else if($select=='dmac')
+
+{
+
+    $fh = fopen( "arp_dmac", "r");
+  while(!feof($fh))
+{
+$line = fgets($fh);
+print $line. '<br>';
+}
+
+fclose($fh);
+}
+
+else if($select=='sip')
+
+{
+
+    $fh = fopen( "arp_sid", "r");
+  while(!feof($fh))
+{
+$line = fgets($fh);
+print $line. '<br>';
+}
+
+fclose($fh);
+}
+else if($select=='dport')
+
+{
+echo "Action not Permitted";
+echo "<br>";
+echo "<br>";
+echo "Try again with other attribute";
+}
+
+else if($select=='dip')
+
+{
+
+    $fh = fopen( "arp_did", "r");
+  while(!feof($fh))
+{
+$line = fgets($fh);
+print $line. '<br>';
+}
+
+fclose($fh);
+}
+
+
+
+else if($select=='sip')
+
+{
+echo "Action not Permitted";
+echo "<br>";
+echo "<br>";
+echo "Try again with other attribute";
+}
+}
+?>
+
+<?php
+if($radio=='arp' && $select=='all')
+{
+ header("Content-type: text/html");
+echo "<html>
+<body>";
+ 
+$file = fopen("arp_all","r");
+?>
+ 
+<table align="center" border="60px">
+<tr>
+               
+<th>Time Stamp</th>
+<th>Source MAC</th>
+                <th>Destination MAC</th>
+<th>Source IP</th>
+
+                <th>Destination IP</th>
+                <th>Packet Length</th>
+</tr>
+
+<?php
+ 
+while(($row = fgets($file)) != false)
+        {
+echo "<tr>";
+$col = explode("\t",$row);
+foreach($col as $data) {
+echo "<td>".trim($data)."</td>";
+}
+echo "</tr>";
+}
+}
+?>
+
+</table>
+</body>
+</html>
+
+
+
+<?php
+# Radio button value is UDP
+
+if($radio=='udp')
+{
+
+if($select=='timestamp')
+
+{
+
+    $fh = fopen( "udp_timestamp", "r");
+  while(!feof($fh))
+{
+$line = fgets($fh);
+print $line. '<br>';
+}
+
+fclose($fh);
+}
+
+else if($select=='length')
+
+{
+
+    $fh = fopen( "udp_length", "r");
+  while(!feof($fh))
+{
+$line = fgets($fh);
+print $line. '<br>';
+}
+
+fclose($fh);
+}
+
+else if($select=='smac')
+
+{
+
+    $fh = fopen( "udp_smac", "r");
+  while(!feof($fh))
+{
+$line = fgets($fh);
+print $line. '<br>';
+}
+
+fclose($fh);
+}
+else if($select=='dmac')
+
+{
+
+    $fh = fopen( "udp_dmac", "r");
+  while(!feof($fh))
+{
+$line = fgets($fh);
+print $line. '<br>';
+}
+
+fclose($fh);
+}
+
+else if($select=='sip')
+
+{
+
+    $fh = fopen( "udp_sid", "r");
+  while(!feof($fh))
+{
+$line = fgets($fh);
+print $line. '<br>';
+}
+
+fclose($fh);
+}
+
+else if($select=='dip')
+
+{
+
+    $fh = fopen( "udp_did", "r");
+  while(!feof($fh))
+{
+$line = fgets($fh);
+print $line. '<br>';
+}
+
+fclose($fh);
+}
+else if($select=='dport')
+
+{
+    $fh = fopen( "udp_dport", "r");
+  while(!feof($fh))
+{
+$line = fgets($fh);
+print $line. '<br>';
+}
+
+fclose($fh);
+}
+
+else if($select=='sport')
+
+{
+    $fh = fopen( "udp_sport", "r");
+  while(!feof($fh))
+{
+$line = fgets($fh);
+print $line. '<br>';
+}
+
+fclose($fh);
+}
+}
+?>
+
+<?php
+if($radio=='udp' && $select=='all')
+{
+ header("Content-type: text/html");
+echo "<html>
+<body>";
+ 
+$file = fopen("tcp_all","r");
+?>
+ 
+<table align="center" border="60px">
+<tr>
+               
+<th>Time Stamp</th>
+<th>Source MAC</th>
+                <th>Destination MAC</th>
+<th>Source IP</th>
+<th>Destination IP</th>
+                <th>Source Port Number</th>
+                <th>Destination Port Number</th>
+                <th>Packet Length</th>
+</tr>
+
+<?php
+ 
+while(($row = fgets($file)) != false)
+        {
+echo "<tr>";
+$col = explode("\t",$row);
+foreach($col as $data) {
+echo "<td>".trim($data)."</td>";
+}
+echo "</tr>";
+}
+}
+?>
+
+</table>
+</body>
+</html>

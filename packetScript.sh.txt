@@ -1,0 +1,57 @@
+# !/bin/bash
+#capture 3000 packets
+tcpdump -i wlp3s0 -c 40 -ne > packets
+
+grep -w "ARP" packets > arp1
+
+#seperate Ipv4 packets, this eventually discards out the IPv6 packets
+  grep -w "IPv4" packets > ip
+
+#seperate the TCP
+grep -w "Flags" ip> tcp
+
+#grep all non-tcp from IPv4 packets i.e. UDP seperated
+grep -w -v "Flags" ip> udp
+
+
+#cut away the ARP Fields
+sed '/Reply/d' arp1>arp
+grep -w "ARP" arp | rev | cut -d " " -f3 | rev | sed 's/,//g'>arp_sid
+
+cut -d " " -f1 arp>arp_timestamp
+cut -d " " -f2 arp>arp_smac
+cut -d " " -f4 arp | cut -d "," -f1>arp_dmac
+cut -d " " -f9 arp | cut -d ":" -f1>arp_length
+cut -d " " -f12 arp>arp_did
+
+paste arp_timestamp arp_smac arp_dmac arp_sid arp_did arp_length>arp_all
+
+
+
+#cut away the TCP Fields
+
+cut -d " " -f1 tcp>tcp_timestamp
+cut -d " " -f2 tcp>tcp_smac
+cut -d " " -f4 tcp | cut -d "," -f1>tcp_dmac
+cut -d " " -f10 tcp | cut -d "." -f1,2,3,4> tcp_sid
+cut -d " " -f10 tcp | cut --complement -d "." -f1,2,3,4> tcp_sport
+cut -d " " -f9 tcp | cut -d ":" -f1>tcp_length
+cut -d " " -f12 tcp | cut -d "." -f1,2,3,4 | sed 's/://g'>tcp_did
+cut -d " " -f12 tcp | cut --complement -d "." -f1,2,3,4 | sed 's/://g'>tcp_dport
+
+paste tcp_timestamp tcp_smac tcp_dmac tcp_sid tcp_did tcp_sport tcp_dport tcp_length>tcp_all
+#sed 's/  / /g' tcp_all | sed 's/   / /g' | sed 's/    / /g' | sed 's/     / /g' | sed 's/\t/ /g'>tcppp
+
+
+#cut away the UDP Fields
+
+cut -d " " -f1 udp>udp_timestamp
+cut -d " " -f2 udp>udp_smac
+cut -d " " -f4 udp | cut -d "," -f1>udp_dmac
+cut -d " " -f10 udp | cut -d "." -f1,2,3,4> udp_sid
+cut -d " " -f10 udp | cut --complement -d "." -f1,2,3,4> udp_sport
+cut -d " " -f9 udp | cut -d ":" -f1>udp_length
+cut -d " " -f12 udp | cut -d "." -f1,2,3,4 | sed 's/:/ /g'>udp_did
+cut -d " " -f12 udp | cut --complement -d "." -f1,2,3,4 | sed 's/:/ /g' | sed 's/\t/ /g'>udp_dport
+
+paste udp_timestamp udp_smac udp_dmac udp_sid udp_did udp_sport udp_dport udp_length>udp_all

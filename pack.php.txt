@@ -1,0 +1,40 @@
+<?php
+
+$uname = $_POST["usr"];
+
+$pass = $_POST["pwd"];
+
+//Connect to the database
+$con = mysqli_connect("localhost","root","cciitk","shilpy");
+
+ //Make sure we connected successfully
+if (mysqli_connect_errno())
+{
+echo "Connetion attempt Failed :".mysqli_connect_error;
+}
+else{
+echo "Connection Status: Connected Successfully";
+echo "<br>";
+echo "<br>";
+}
+
+$sql = "select * FROM login where name='$uname' and password='$pass'";
+
+
+$result = mysqli_query($con, $sql);
+$row = mysqli_num_rows($result);
+
+if($row==0)
+  {
+header('location: http://localhost/pagee.html');
+exit;
+}
+else
+{
+system('/var/www/html/packetscript.sh');
+header('location: http://localhost/page.html');
+exit;
+
+
+}
+?>
